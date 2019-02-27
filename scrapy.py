@@ -6,6 +6,9 @@ except ImportError:
     from urllib2 import urlopen
 
 from bs4 import BeautifulSoup
+import csv
+from datetime import datetime
+
 
 # specify the url
 quote_page = 'http://www.bloomberg.com/quote/SPX:IND'
@@ -26,3 +29,8 @@ print(name)
 subtitle = soup.find('p', attrs={'class': 'continue'}) #, attrs={'class':'priceText__1853e8a5'}
 content = subtitle.text
 print(content)
+
+# open a csv file with append, so old data will not be erased
+with open('index.csv', 'a') as csv_file:
+    writer = csv.writer(csv_file)
+    writer.writerow([name, content, datetime.now()])
